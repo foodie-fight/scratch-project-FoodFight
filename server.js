@@ -1,10 +1,19 @@
+
 const express = require('express');
 const app = express();
- 
+const server = require('http').Server(app);
+const socket = require('socket.io');
+const io = socket(server);
+const fs = require('fs');
+
+
 app.use(express.static(__dirname + '/www'));
- 
-const server = app.listen(3000, function() {
-  const host = server.address().address;
-  const port = server.address().port;
-  console.log('Example app listening at http://%s:%s', host, port);
-});
+
+
+io.on('connect', function () {
+  console.log('connected')
+})
+
+
+
+server.listen(3000)

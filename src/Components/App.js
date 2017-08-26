@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import io from 'socket.io-client';
-import Platform from './Platform.js'
+import Test from './Test.js';
 
 
 
-class App extends React.Component {
+class App extends Component {
 
     render() {
 
         return (
             <div>
-                <Platform/>
+                <Test/>
             </div>
         )
     }

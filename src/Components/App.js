@@ -11,7 +11,7 @@ class App extends Component {
 
         return (
             <div>
-                <Test name="Kris"/>
+                <Test/>
             </div>
         )
     }

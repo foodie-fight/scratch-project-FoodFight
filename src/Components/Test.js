@@ -28,7 +28,7 @@ class Test extends React.Component {
         this.socket.on('connected', this.connected)
         this.socket.on('onYes', this.onYes)
         this.socket.on('onReturnYes', this.onReturnYes);
-        this.socket.on('yesVote', this.voteCountUpdate)
+        this.socket.on('voteCountUpdate', this.voteCountUpdate) //*********
     }
 
     emit(event, data){
@@ -37,29 +37,26 @@ class Test extends React.Component {
 
     connect() {
         this.setState({ status: 'connected', name: 'Will'});
-        console.log('hellooo');
     }
 
     connected(data) {
         this.setState({ name: data.name });       
     }
 
-    voteCountUpdate() {
-        this.state.count++
+    voteCountUpdate(data) {
+        this.setState({ count: data.count }) 
     }
 
     onReturnYes(data){
-        console.log('onReturnYes', this.state.count);
-        this.state.count += 1;
-        this.setState({ name: data.name })
-        
+        // this.state.count += 1;
+        this.setState({ name: data.name, count: data.count})
     }
-
     
     onYes(){
         console.log('onYes');
         this.emit('yesVote', {name: 'I Voted'});       
     }
+
     render() {
         return(
             <div>

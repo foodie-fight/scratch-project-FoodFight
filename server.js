@@ -11,7 +11,7 @@ const users = [];
 
 //test variable
 let name = '';
-let counter;
+let counter = 0;
 // const fs = require('fs');
 
 //listens for connect event when users join our poll
@@ -25,19 +25,22 @@ io.sockets.on('connect', function (socket) {
     socket.disconnect(); 
     //console logs how many sockets remain connected
     console.log('Disconnected: %s users remaining', users.length);
+
   });//ends socket.once.disconnect
 
-  //broadcasts to new user connection 
-  socket.emit('connected', {
-    name: 'Kris'
-    }, console.log('can you hear me now?'));//ends socket.emit.welcome
+  // //broadcasts to new user connection 
+  // socket.emit('connected', {
+ 
+  // });//ends socket.emit.welcome
   
   socket.on('yesVote', function(data){
-    // { name: data.name }
-    socket.emit('onReturnYes', { name: data.name, count : counter++ })
-    socket.broadcast.emit('yesVote', { count : counter})
-    console.log('still working')
-  } );
+    // we increment the vote count on the server for every vote click
+    counter++;
+    // on 'returnYes' event, we emit pass an obj as 
+    socket.emit('onReturnYes', { name: data.name, count : counter})
+    socket.broadcast.emit('voteCountUpdate', { count: counter }) //********
+  });
+
   //pushes new users into our user collection (aka socket connections)
   users.push(socket);
 

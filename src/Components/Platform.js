@@ -11,6 +11,7 @@ class Platform extends React.Component {
     constructor() {
         super();
         this.state = {
+
             status: 'disconnected',
             Option1: 'Chinese',
             Option2: 'Japanese',
@@ -100,7 +101,10 @@ class Platform extends React.Component {
         this.setState({ count4Italian: data.count4Italian })
     }
 
+
+
     render() {
+      
         return (
         <div>
                 <div className="cover-container" style={styles.contain}>

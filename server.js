@@ -2,12 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-app.use(express.static(__dirname + '/www'));
-app.use(bodyParser.urlencoded({ extended: true }));
 const server = app.listen(3000);
 const io = require('socket.io').listen(server);
 //users array stores our user socket connections
 let users = [];
+
 let chineseCounter = 0;
 let japaneseCounter = 0;
 let mexicanCounter = 0;
@@ -72,6 +71,7 @@ io.sockets.on('connect', function (socket) {
         socket.emit('onReturnYesItalian', { count4Italian: italianCounter })
         socket.broadcast.emit('voteCountUpdateItalian', { count4Italian: italianCounter }) //********
     });
+
 });//ends io.socket.on.connect
 //logs when connected to server
 console.log('connected to server');

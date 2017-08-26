@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 
 app.use(express.static(__dirname + '/www'));
+app.use(express.static('./node_modules/bootstrap/dist'));
+
 
 const server = app.listen(3000);
 const io = require('socket.io').listen(server);
@@ -30,7 +32,7 @@ io.sockets.on('connect', function (socket) {
 
   // //broadcasts to new user connection 
   // socket.emit('connected', {
-
+      
   // });//ends socket.emit.welcome
   
   socket.on('yesVote', function(data){

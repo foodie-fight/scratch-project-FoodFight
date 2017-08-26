@@ -17,9 +17,8 @@ class Options extends React.Component {
                 {/* {console.log(this.props)} */}
 
                 
-                {option}
-                <button type="button" onClick={this.props.onYes}>Yes</button>
-                <button type="button" onClick={this.props.onNo}>No</button>
+                <button type="button" onClick={this.props.onYes}>{option}</button>
+
 
             </div>
         )

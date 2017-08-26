@@ -18,7 +18,7 @@ let counter = 0;
 io.sockets.on('connect', function (socket) {
   
   //listens for disconnect event (when user leaves); fires only once
-  socket.once('disconnect', () => {
+  socket.on('disconnect', () => {
     //grabs indexOf of disconnect user and splices just that one socket
     users.splice(users.indexOf(socket), 1);
     //calls disconnect to make sure socket/user disconnected
@@ -30,7 +30,7 @@ io.sockets.on('connect', function (socket) {
 
   // //broadcasts to new user connection 
   // socket.emit('connected', {
- 
+
   // });//ends socket.emit.welcome
   
   socket.on('yesVote', function(data){

@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import io from 'socket.io-client';
-
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
 class Test extends React.Component {
 
@@ -9,11 +11,19 @@ class Test extends React.Component {
 
         super();
 
+        /*
+        initialize our state to have a user socket connection status,
+        username
+        
+        */
+
         this.state = {
             status: 'disconnected',
             name: 'Warda',
             count: 0,
             }
+
+
         this.connect = this.connect.bind(this);
         this.connected = this.connected.bind(this);
         this.onYes = this.onYes.bind(this);
@@ -57,17 +67,60 @@ class Test extends React.Component {
         this.emit('yesVote', {name: 'I Voted'});       
     }
 
+    onMexican() {
+        this.emit('onMexican', {name: 'Mexican'});
+    }
+
     render() {
         return(
             <div>
 
                 <h1>{this.state.name}, {this.state.count}</h1>
-                <button type="button" onClick={this.onYes}>Yes</button>
+                
+                <RadioButtonGroup name="foodTypes" defaultSelected="not_light">
+
+                    <RadioButton
+                        value="Mexican"
+                        label="Mexican"
+                        checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                        uncheckedIcon={<ActionFavoriteBorder />}
+                        style={styles.radioButton}
+                        onClick={this.onMexican}
+                    />
+
+
+                    <RadioButton
+                        value="Italian"
+                        label="Italian"
+                        checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                        uncheckedIcon={<ActionFavoriteBorder />}
+                        style={styles.radioButton}
+                        onClick={this.onYes}
+                    />
+
+
+                    <RadioButton
+                        value="Chinese"
+                        label="Chinese"
+                        checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                        uncheckedIcon={<ActionFavoriteBorder />}
+                        style={styles.radioButton}
+                        onClick={this.onYes}
+                    />
+                </RadioButtonGroup>
             </div>
         );
     }
 
 
 }
+const styles = {
+    block: {
+        maxWidth: 250,
+    },
+    radioButton: {
+        marginBottom: 16,
+    },
+};
 
 export default Test;

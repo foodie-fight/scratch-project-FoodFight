@@ -17,6 +17,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.17.2",
+    "bootstrap": "^4.0.0-beta",
     "express": "^4.15.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

@@ -2,11 +2,16 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.urlencoded({ extended: true }));
 const server = app.listen(3000, () => {
     console.log('now listening on 3000!');
   });
+  app.get('/alextest', (req,res) => {
+    console.log(path.join(__dirname, 'login.html'))
+    res.sendFile(path.join(__dirname, 'login.html'))
+})
 const io = require('socket.io').listen(server);
 //users array stores our user socket connections
 let users = [];
@@ -15,6 +20,9 @@ let japaneseCounter = 0;
 let mexicanCounter = 0;
 let italianCounter = 0;
 let voters = [];
+app.set('view engine', 'ejs');
+app.use(cookieParser())
+
 // Add name to vote list
 // create cookie to persist and prevent multiple votes by same person
 //listens for connect event when users join our poll

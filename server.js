@@ -2,23 +2,18 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser')
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-mongoose.connect('mongodb://foods:123@ds163053.mlab.com:63053/foodtinder');
-mongoose.connection.once('open', () => {
-  console.log('connected with mongoDB');
-})
-
 const server = app.listen(3000, () => {
     console.log('now listening on 3000!');
-  });
-  app.get('/alextest', (req,res) => {
+});
+app.get('/alextest', (req,res) => {
     console.log(path.join(__dirname, 'login.html'))
     res.sendFile(path.join(__dirname, 'login.html'))
 })
+
+
 const io = require('socket.io').listen(server);
 //users array stores our user socket connections
 let users = [];
@@ -35,8 +30,9 @@ app.use(cookieParser())
 //listens for connect event when users join our poll
 io.sockets.on('connect', function (socket) {
     //pushes new users into our user collection (aka socket connections)
-    console.log(socket.id)
     users.push(socket);
+    console.log(users);
+    //console logs how many users (sockets) are connected to our server
     console.log('Connected: %s users', users.length);
     //listens for disconnect event (when user leaves); fires only once
     socket.on('disconnect', () => {
@@ -47,7 +43,7 @@ io.sockets.on('connect', function (socket) {
         //console logs how many sockets remain connected
         console.log('Disconnected: %s users remaining', users.length);
     });//ends socket.once.disconnect
-    // //broadcasts to new user connection
+    // //broadcasts to new user connection 
     // socket.emit('connected', {
     // });//ends socket.emit.welcome
     socket.emit('welcome', {

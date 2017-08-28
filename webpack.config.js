@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 
 module.exports = {
   // context: path.join(__dirname, 'src'),
@@ -13,7 +14,8 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?/,
+        exclude: /node_modules/,
         loader: "babel-loader", //make sure u look at PLURAL loader and loaders
         query: {
           presets: ["es2015", "react"]
@@ -21,13 +23,9 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /node_modules/,
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
-  },
-  resolve: {
-    modules: [
-      path.join(__dirname, 'node_modules'),
-    ],
   },
 };

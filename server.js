@@ -2,9 +2,19 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.urlencoded({ extended: true }));
-const server = app.listen(3000);
+
+mongoose.connect('mongodb://foods:123@ds163053.mlab.com:63053/foodtinder');
+mongoose.connection.once('open', () => {
+  console.log('connected with mongoDB');
+})
+
+const server = app.listen(3000, () => {
+    console.log('now listening on 3000!');
+  });
 const io = require('socket.io').listen(server);
 //users array stores our user socket connections
 let users = [];
@@ -18,9 +28,8 @@ let voters = [];
 //listens for connect event when users join our poll
 io.sockets.on('connect', function (socket) {
     //pushes new users into our user collection (aka socket connections)
+    console.log(socket.id)
     users.push(socket);
-    console.log(users);
-    //console logs how many users (sockets) are connected to our server
     console.log('Connected: %s users', users.length);
     //listens for disconnect event (when user leaves); fires only once
     socket.on('disconnect', () => {
@@ -75,4 +84,3 @@ io.sockets.on('connect', function (socket) {
 
 });//ends io.socket.on.connect
 //logs when connected to server
-console.log('connected to server');

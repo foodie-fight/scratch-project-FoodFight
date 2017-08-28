@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "./node_modules/.bin/webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "./node_modules/.bin/webpack -w"
   },
   "keywords": [],
   "author": "",

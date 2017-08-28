@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-app.use(express.static(__dirname + '/www'));
+app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.urlencoded({ extended: true }));
 const server = app.listen(3000);
 const io = require('socket.io').listen(server);
@@ -31,7 +31,7 @@ io.sockets.on('connect', function (socket) {
         //console logs how many sockets remain connected
         console.log('Disconnected: %s users remaining', users.length);
     });//ends socket.once.disconnect
-    // //broadcasts to new user connection 
+    // //broadcasts to new user connection
     // socket.emit('connected', {
     // });//ends socket.emit.welcome
     socket.emit('welcome', {

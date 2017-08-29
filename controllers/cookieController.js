@@ -22,7 +22,6 @@ function setSSIDCookie(req, res, next) {
   getUserId(req.body.username, function(id) {
     res.cookie('ssid', id, { httpOnly: true });
     res.ssid = id;
-    console.log('this is the cookie ', res.ssid)
     next();
   });
 

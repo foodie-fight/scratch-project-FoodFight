@@ -19,38 +19,37 @@ const server = app.listen(3000, () => {
     console.log('now listening on 3000!');
 });
 app.get('/', (req,res) => {
-    // console.log(req,"request from logged in")
     res.sendFile(path.join(__dirname, './build/index.html'))
 })
-app.get('/logged', (req,res) => {
-    // console.log(req,"request from logged in")
-    res.sendFile(path.join(__dirname, 'login.html'))
-})
+// app.get('/logged', (req,res) => {
+//     res.sendFile(path.join(__dirname, 'login.html'))
+// })
 app.get('/signup', (req,res) => {
     res.sendFile(path.join(__dirname, 'signup.html'))
 })
 app.post('/signup', 
     userController.createUser,
+    cookieController.setSSIDCookie,
     (req,res, next) => {
         console.log(req.body ,"request body from sign up")
         res.redirect('/')
-        // res.sendFile(path.join(__dirname, './build/index.html'))
 })
 app.post('/logged', 
     userController.verifyUser,
-    cookieController.setSSIDCookie,
-    sessionController.startSession,
+    // sessionController.startSession,
+    sessionController.isLoggedIn,
     (req,res, next) => {
         console.log('this line was hit  ')
         res.redirect('/logged')
 })
 
-// app.get('/logged', sessionController.isLoggedIn, function(req, res) {
-//   userController.getAllUsers(function(err, users) {
-//     if (err) throw err;
-//     res.sendFile(path.join(__dirname, 'login.html'))
-//   });
-// });
+app.get('/logged', sessionController.isLoggedIn, function(req, res) {
+  userController.getAllUsers(function(err, users) {
+      console.log('this is users ', users)
+    if (err) throw err;
+    res.sendFile(path.join(__dirname, 'login.html'))
+  });
+});
 
 
 const io = require('socket.io').listen(server);

@@ -1,6 +1,4 @@
 let User = require('./../models/userModel');
-// const cookieController = require('./cookieController');
-// const sessionController = require('./session/sessionController');
 const bcrypt = require('bcryptjs');
 const path = require('path')
 

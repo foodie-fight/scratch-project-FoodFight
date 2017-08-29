@@ -104,14 +104,14 @@ class Platform extends React.Component {
 
 
     render() {
-      
+
         return (
         <div>
                 <div className="cover-container" style={styles.contain}>
 
                     <div className="col-lg-6">
                         <h1 className="cover-heading">Here’s three choices.</h1>
-                            
+
 
                                 <RadioButtonGroup name="foodTypes" defaultSelected="not_light">
 
@@ -122,7 +122,7 @@ class Platform extends React.Component {
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
                                         onClick={this.onMexican}
-                                    /> 
+                                    />
 
                                     <RadioButton
                                         value="Japanese"

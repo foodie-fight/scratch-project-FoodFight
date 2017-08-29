@@ -2,9 +2,57 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-app.use(express.static(__dirname + '/www'));
+const cookieParser = require('cookie-parser')
+const mongoose = require('mongoose');
+const userController = require('./controllers/userController.js')
+const sessionController = require('./controllers/sessionController.js')
+const cookieController = require('./controllers/cookieController.js')
+
+mongoose.connect('mongodb://foods:123@ds163053.mlab.com:63053/foodtinder');
+mongoose.connection.once('open', () => {
+  console.log('connected with mongoDB');
+})
+
+app.use(express.static(__dirname + '/build'));
 app.use(bodyParser.urlencoded({ extended: true }));
-const server = app.listen(3000);
+const server = app.listen(3000, () => {
+    console.log('now listening on 3000!');
+});
+app.get('/', (req,res) => {
+    // console.log(req,"request from logged in")
+    res.sendFile(path.join(__dirname, './build/index.html'))
+})
+app.get('/logged', (req,res) => {
+    // console.log(req,"request from logged in")
+    res.sendFile(path.join(__dirname, 'login.html'))
+})
+app.get('/signup', (req,res) => {
+    res.sendFile(path.join(__dirname, 'signup.html'))
+})
+app.post('/signup', 
+    userController.createUser,
+    (req,res, next) => {
+        console.log(req.body ,"request body from sign up")
+        res.redirect('/')
+        // res.sendFile(path.join(__dirname, './build/index.html'))
+})
+app.post('/logged', 
+    userController.verifyUser,
+    cookieController.setSSIDCookie,
+    sessionController.startSession,
+    (req,res, next) => {
+        console.log('this line was hit  ')
+        res.redirect('/logged')
+})
+
+// app.get('/logged', sessionController.isLoggedIn, function(req, res) {
+//   userController.getAllUsers(function(err, users) {
+//     if (err) throw err;
+//     res.sendFile(path.join(__dirname, 'login.html'))
+//   });
+// });
+
+
 const io = require('socket.io').listen(server);
 //users array stores our user socket connections
 let users = [];
@@ -13,13 +61,16 @@ let japaneseCounter = 0;
 let mexicanCounter = 0;
 let italianCounter = 0;
 let voters = [];
+app.set('view engine', 'ejs');
+app.use(cookieParser())
+
 // Add name to vote list
 // create cookie to persist and prevent multiple votes by same person
 //listens for connect event when users join our poll
 io.sockets.on('connect', function (socket) {
     //pushes new users into our user collection (aka socket connections)
     users.push(socket);
-    console.log(users);
+    // console.log(users);
     //console logs how many users (sockets) are connected to our server
     console.log('Connected: %s users', users.length);
     //listens for disconnect event (when user leaves); fires only once
@@ -75,4 +126,3 @@ io.sockets.on('connect', function (socket) {
 
 });//ends io.socket.on.connect
 //logs when connected to server
-console.log('connected to server');

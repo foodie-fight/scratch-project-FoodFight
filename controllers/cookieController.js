@@ -20,9 +20,11 @@ function getUserId(username, callback) {
 
 function setSSIDCookie(req, res, next) {
   getUserId(req.body.username, function(id) {
-    res.cookie('ssid', id, { httpOnly: true });
+    console.log(id, 'this is id')
+    res.cookie('ssid', id, { httpOnly: true, maxAge: 5 * 60 * 1000 })
     res.ssid = id;
-    console.log('this is the cookie ', res.ssid)
+    console.log(res.cookie().Expires, 'this is res.cookie')
+    //look up how to make and expiration date show
     next();
   });
 

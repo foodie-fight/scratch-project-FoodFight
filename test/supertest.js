@@ -8,16 +8,11 @@ const HOST = `http://localhost:${PORT}`;
 
 
 
-describe('Route integration', () => {
-  describe('/', () => {
-    describe('GET', () => {
-      it('responds with 200 status and text/html content type', done => {
-        request(HOST)
-          .get('/')
-          .expect('Content-Type', /text\/html/)
-          .expect(200, done);
-      });
-    });
+describe('HomePage', () => {
+  it('responds with 200 status and text/html content type', done => {
+    request(HOST).get('/')
+    .expect('Content-Type', /text\/html/)
+    .expect(200, done);
   });
 
   describe('/logged', () => {

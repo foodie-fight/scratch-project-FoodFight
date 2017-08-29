@@ -8,7 +8,7 @@ const HOST = `http://localhost:${PORT}`;
 
 
 
-describe('HomePage', () => {
+describe('loginpage', () => {
   it('responds with 200 status and text/html content type', done => {
     request(HOST).get('/')
     .expect('Content-Type', /text\/html/)
@@ -16,12 +16,10 @@ describe('HomePage', () => {
   });
 
   describe('/logged', () => {
-    describe('GET', () => {
-      it('response with 200 status and text/html content type', done => {
-        request(HOST)
-        .get('/logged')
-        .expect('Content-Type', /text\/html/)
-        .expect(200, done);
+    it('response with 200 status and text/html content type', done => {
+      request(HOST).get('/logged')
+      .expect('Content-Type', /text\/html/)
+      .expect(200, done);
       });
     });
 

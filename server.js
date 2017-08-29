@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const server = app.listen(3000, () => {
     console.log('now listening on 3000!');
 });
+app.get('/', (req,res) => {
+    // console.log(req,"request from logged in")
+    res.sendFile(path.join(__dirname, './build/index.html'))
+})
 app.get('/logged', (req,res) => {
     // console.log(req,"request from logged in")
     res.sendFile(path.join(__dirname, 'login.html'))
@@ -25,14 +29,28 @@ app.get('/logged', (req,res) => {
 app.get('/signup', (req,res) => {
     res.sendFile(path.join(__dirname, 'signup.html'))
 })
-app.post('/signup', (req,res) => {
-    console.log(req.body ,"request body from sign up")
-    res.sendFile(path.join(__dirname, './build/index.html'))
+app.post('/signup', 
+    userController.createUser,
+    (req,res, next) => {
+        console.log(req.body ,"request body from sign up")
+        res.redirect('/')
+        // res.sendFile(path.join(__dirname, './build/index.html'))
 })
-app.post('/logged', (req,res) => {
-    console.log(req.body ,"request body from sign up")
-    res.sendFile(path.join(__dirname, 'login.html'))
+app.post('/logged', 
+    userController.verifyUser,
+    cookieController.setSSIDCookie,
+    sessionController.startSession,
+    (req,res, next) => {
+        console.log('this line was hit  ')
+        res.redirect('/logged')
 })
+
+// app.get('/logged', sessionController.isLoggedIn, function(req, res) {
+//   userController.getAllUsers(function(err, users) {
+//     if (err) throw err;
+//     res.sendFile(path.join(__dirname, 'login.html'))
+//   });
+// });
 
 
 const io = require('socket.io').listen(server);
@@ -52,7 +70,7 @@ app.use(cookieParser())
 io.sockets.on('connect', function (socket) {
     //pushes new users into our user collection (aka socket connections)
     users.push(socket);
-    console.log(users);
+    // console.log(users);
     //console logs how many users (sockets) are connected to our server
     console.log('Connected: %s users', users.length);
     //listens for disconnect event (when user leaves); fires only once

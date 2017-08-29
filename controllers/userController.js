@@ -17,7 +17,7 @@ userController.createUser = (req, res, next) => {
   }
   User.create(obj, (err) => {
     if (err) {
-      res.render(path.join(__dirname, '../../client/signup.ejs'), { error : err }) //IMPORTANT LINE
+      res.render(path.join(__dirname, './../signup.html'))
     }
     else {
      next()
@@ -25,8 +25,9 @@ userController.createUser = (req, res, next) => {
   })
 };
 
-userController.verifyUser = function(req, res, next) {
+userController.verifyUser = (req, res, next) => {
   User.find({username: req.body.username}, (err, users) => {
+    console.log('this is a verified user', users)
     if(!users.length) return res.redirect('/signup');
     bcrypt.compare(req.body.password, users[0].password, function(err, resp) {
       if(err) throw err;

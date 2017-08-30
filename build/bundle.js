@@ -44126,7 +44126,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onJapanese',
         value: function onJapanese() {
-            this.emit('yesJapanese');
+            this.emit('yesJapanese', socket.id);
         }
     }, {
         key: 'onReturnYesJapanese',
@@ -44141,7 +44141,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onMexican',
         value: function onMexican() {
-            this.emit('yesMexican');
+            this.emit('yesMexican', socket.id);
         }
     }, {
         key: 'onReturnYesMexican',
@@ -44156,7 +44156,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onItalian',
         value: function onItalian() {
-            this.emit('yesItalian');
+            this.emit('yesItalian', socket.id);
         }
     }, {
         key: 'onReturnYesItalian',
@@ -44171,6 +44171,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            console.log(socket.id, " this is socket.id");
 
             return _react2.default.createElement(
                 'div',

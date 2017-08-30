@@ -50,11 +50,10 @@ app.post('/logged',
     cookieController.setSSIDCookie,
     sessionController.startSession,
     (req,res, next) => {       
-        console.log('this line was hit  ', req.body.username)
         User.findOne({username: req.body.username}, (err, userd) => {
             users.push(userd)
-            console.log(userd,'this is userd')
         })
+        console.log('testing users', users)
         res.redirect('/logged')
 })
 
@@ -110,44 +109,70 @@ io.sockets.on('connect', function (socket) {
         // User.findOneAndUpdate({username:currUser.username},{socketId: socket.id},(err,data) => {
         //     console.log(data, 'hopefully something returns')
         // })
-        let socketId = data;
-        if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
+        // let socketId = data;
+        // if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
+        if (voters.indexOf(currUser.username) === -1) {
             chineseCounter += 1;
             socket.emit('onReturnYesChinese', { count4Chinese: chineseCounter })
             socket.broadcast.emit('voteCountUpdateChinese', { count4Chinese: chineseCounter })
             voters.push(currUser.username)
-            currUser[socketId] = data
+            // currUser[socketId] = data
             console.log(voters, "this is voters")
-            console.log(voters.indexOf(currUser.username))
-            console.log(currUser[socketId])
+            console.log(voters.indexOf(currUser.username, 'this is currUser.username'))
+            // console.log(currUser[socketId], 'this is socketID')
         } else {
             console.log('error')
         }
          //********
     });
     socket.on('yesJapanese', function (data) {
-        if (voters.indexOf(socket.id) === -1) {
+        // let socketId = data;
+        // if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
+        if (voters.indexOf(currUser.username) === -1) {
             japaneseCounter += 1;
-            voters.push(socket.id)
+            socket.emit('onReturnYesJapanese', { count4Japanese: japaneseCounter })
+            socket.broadcast.emit('voteCountUpdateJapanese', { count4Japanese: japaneseCounter })
+            voters.push(currUser.username)
+            // currUser[socketId] = data
+            console.log(voters, "this is voters")
+            console.log(voters.indexOf(currUser.username, 'this is currUser.username'))
+            // console.log(currUser[socketId], 'this is socketID')
+        } else {
+            console.log('error')
         }
-        socket.emit('onReturnYesJapanese', { count4Japanese: japaneseCounter })
-        socket.broadcast.emit('voteCountUpdateJapanese', { count4Japanese: japaneseCounter }) //********
     });
     socket.on('yesMexican', function (data) {
-        if (voters.indexOf(socket.id) === -1) {
+        console.log(data, "this is the data!!!")
+        // let socketId = data;
+        // if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
+        if (voters.indexOf(currUser.username) === -1) {
             mexicanCounter += 1;
-            voters.push(socket.id)
+            socket.emit('onReturnYesMexican', { count4Mexican: mexicanCounter })
+            socket.broadcast.emit('voteCountUpdateMexican', { count4Mexican: mexicanCounter })
+            voters.push(currUser.username)
+            // currUser[socketId] = data
+            console.log(voters, "this is voters")
+            console.log(voters.indexOf(currUser.username, 'this is currUser.username'))
+            // console.log(currUser[socketId], 'this is socketID')
+        } else {
+            console.log('error')
         }
-        socket.emit('onReturnYesMexican', { count4Mexican: mexicanCounter })
-        socket.broadcast.emit('voteCountUpdateMexican', { count4Mexican: mexicanCounter }) //********
     });
     socket.on('yesItalian', function (data) {
-        if (voters.indexOf(socket.id) === -1) {
+        // let socketId = data;
+        // if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
+        if (voters.indexOf(currUser.username) === -1) {
             italianCounter += 1;
-            voters.push(socket.id)
+            socket.emit('onReturnYesItalian', { count4Italian: italianCounter })
+            socket.broadcast.emit('voteCountUpdateItalian', { count4Italian: italianCounter })
+            voters.push(currUser.username)
+            // currUser[socketId] = data
+            console.log(voters, "this is voters")
+            console.log(voters.indexOf(currUser.username, 'this is currUser.username'))
+            // console.log(currUser[socketId], 'this is socketID')
+        } else {
+            console.log('error')
         }
-        socket.emit('onReturnYesItalian', { count4Italian: italianCounter })
-        socket.broadcast.emit('voteCountUpdateItalian', { count4Italian: italianCounter }) //********
     });
 
 });//ends io.socket.on.connect

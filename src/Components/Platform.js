@@ -21,6 +21,7 @@ class Platform extends React.Component {
             count4Japanese: 0,
             count4Mexican: 0,
             count4Italian: 0,
+            winner: '... hmm what should we eat?',
         }
         this.connected = this.connected.bind(this);
         this.emit = this.emit.bind(this);
@@ -37,6 +38,9 @@ class Platform extends React.Component {
         this.onItalian = this.onItalian.bind(this);
         this.onReturnYesItalian = this.onReturnYesItalian.bind(this);
         this.voteCountUpdateItalian = this.voteCountUpdateItalian.bind(this);
+        this.collector = this.collector.bind(this)
+        this.onReturnCollector = this.onReturnCollector.bind(this)
+        this.voteCountUpdateCollector = this.voteCountUpdateCollector.bind(this)
     }
     componentWillMount() {
         this.socket = io('http://localhost:3000');
@@ -54,6 +58,9 @@ class Platform extends React.Component {
         this.socket.on('onItalian', this.onItalian);
         this.socket.on('onReturnYesItalian', this.onReturnYesItalian);
         this.socket.on('voteCountUpdateItalian', this.voteCountUpdateItalian);
+        this.socket.on('collector', this.collector);
+        this.socket.on('onReturnCollector', this.onReturnCollector);
+        this.socket.on('voteCountUpdateCollector', this.voteCountUpdateCollector);
     }
     emit(event, data) {
         this.socket.emit(event, data);
@@ -65,7 +72,7 @@ class Platform extends React.Component {
         this.setState({ name: data.name });
     }
     onChinese() {
-        this.emit('yesChinese', socket.id);
+        this.emit('yesChinese');
     }
     onReturnYesChinese(data) {
         this.setState({ count4Chinese: data.count4Chinese }) 
@@ -74,7 +81,7 @@ class Platform extends React.Component {
         this.setState({ count4Chinese: data.count4Chinese })
     }
     onJapanese() {
-        this.emit('yesJapanese', socket.id);
+        this.emit('yesJapanese');
     }
     onReturnYesJapanese(data) {
         this.setState({ count4Japanese: data.count4Japanese })
@@ -83,7 +90,7 @@ class Platform extends React.Component {
         this.setState({ count4Japanese: data.count4Japanese })
     }
     onMexican() {
-        this.emit('yesMexican', socket.id);
+        this.emit('yesMexican');
     }
     onReturnYesMexican(data) {
         this.setState({ count4Mexican: data.count4Mexican })
@@ -92,7 +99,7 @@ class Platform extends React.Component {
         this.setState({ count4Mexican: data.count4Mexican })
     }
     onItalian() {
-        this.emit('yesItalian', socket.id);
+        this.emit('yesItalian');
     }
     onReturnYesItalian(data) {
         this.setState({ count4Italian: data.count4Italian })
@@ -100,13 +107,22 @@ class Platform extends React.Component {
     voteCountUpdateItalian(data) {
         this.setState({ count4Italian: data.count4Italian })
     }
+    collector() {
+        this.emit('yesCollection');
+    }
+    onReturnCollector(data) {
+        console.log(data.winner, ' this is that data on ONRETURNCOLLECTOR')
+        this.setState({ winner: data.winner }) 
+    }
+    voteCountUpdateCollector(data) {
+        console.log('votecountupdatecollectorhit', data.winner)
+        this.setState({ winner: data.winner })
+    }
 
 
 
     render() {
-        console.log(socket.id, " this is socket.id")
-        
-
+        console.log(this.state.winner, ' this is this state.winner')
         return (
         <div>
                 <div className="cover-container" style={styles.contain}>
@@ -152,6 +168,11 @@ class Platform extends React.Component {
                                         style={styles.radioButton}
                                         onClick={this.onChinese}
                                     />
+                                    <RadioButton
+                                        value="collection"
+                                        label="Choose Meal"
+                                        onClick={this.collector}
+                                    />
                                 </RadioButtonGroup>
                         </div>
 
@@ -161,6 +182,7 @@ class Platform extends React.Component {
                     <p className="lead">{this.state.count4Japanese} Votes for Japanese Cuisine </p>
                     <p className="lead">{this.state.count4Chinese} Votes for Chinese Cuisine </p>
                     <p className="lead">{this.state.count4Italian} Votes for Italian Cuisine</p>
+                    <p className="won">{this.state.winner}!!</p>
                 </div>
             </div>
         </div>
@@ -178,7 +200,6 @@ const styles = {
     contain: {
         wrapMargin: '30',
         padding: '50',
-        backgroundImage: "url('http://www.nmgncp.com/data/out/124/4634171-food-wallpaper-background.jpg')"
     }
 };
 

@@ -20,7 +20,6 @@ function getUserId(username, callback) {
 
 function setSSIDCookie(req, res, next) {
   getUserId(req.body.username, function(id) {
-    console.log(id, 'this is id')
     res.cookie('ssid', id, { httpOnly: true, Expires: Date.now() + (5 * 60 * 1000) })
     res.ssid = id;
     next();

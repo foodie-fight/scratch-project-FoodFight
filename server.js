@@ -100,7 +100,7 @@ io.sockets.on('connect', function (socket) {
         count4Japanese: japaneseCounter,
         count4Mexican: mexicanCounter,
         count4Italian: italianCounter,
-    }) 
+    })
     socket.on('yesChinese', function (data) {
         console.log('yesChinese', data)
         // User.find({},(err,data) => {
@@ -142,7 +142,6 @@ io.sockets.on('connect', function (socket) {
         }
     });
     socket.on('yesMexican', function (data) {
-        console.log(data, "this is the data!!!")
         // let socketId = data;
         // if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
         if (voters.indexOf(currUser.username) === -1) {
@@ -161,6 +160,7 @@ io.sockets.on('connect', function (socket) {
     socket.on('yesItalian', function (data) {
         // let socketId = data;
         // if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
+        if(!currUser) return
         if (voters.indexOf(currUser.username) === -1) {
             italianCounter += 1;
             socket.emit('onReturnYesItalian', { count4Italian: italianCounter })
@@ -174,6 +174,34 @@ io.sockets.on('connect', function (socket) {
             console.log('error')
         }
     });
-
+    socket.on('yesCollection', function (data) {
+        let cuisineList = [italianCounter,japaneseCounter,chineseCounter,mexicanCounter]
+        let maxCount = Math.max.apply(null, cuisineList)
+        let winners = []
+        let answer;
+        if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(italianCounter)){
+            if(winners.indexOf('Italian') === -1){
+                winners.push('Italian')
+            }
+        }
+        if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(chineseCounter)){
+            if(winners.indexOf('Chinese') === -1){
+                winners.push('Chinese')
+            }        }
+        if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(japaneseCounter)){
+            if(winners.indexOf('Japanese') === -1){
+                winners.push('Japanese')
+            }        }
+        if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(mexicanCounter)){
+            if(winners.indexOf('Mexican') === -1){
+                winners.push('Mexican')
+            }        }
+        if(!winners.length){answer = ''}
+        if(winners.length === 1){answer = `the winner is ${winners[0]}`}
+        if(winners.length > 1){answer = `the winners are ${winners}`}
+        console.log(answer, 'this is the answer')
+        socket.emit('onReturnCollector', { winner: answer })
+        socket.broadcast.emit('voteCountUpdateCollector', { winner: answer })
+    });
 });//ends io.socket.on.connect
 //logs when connected to server

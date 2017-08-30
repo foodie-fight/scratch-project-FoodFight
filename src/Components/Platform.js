@@ -112,7 +112,22 @@ class Platform extends React.Component {
     }
     onReturnCollector(data) {
         console.log(data.winner, ' this is that data on ONRETURNCOLLECTOR')
-        this.setState({ winner: data.winner }) 
+        this.setState({ winner: data.winner })
+        console.log(this.state.winner, 'this is this.state.winner')
+        let guyThatWins = this.state.winner.split(" ").reverse()[0]
+        // if(guyThatWins === 'Mexican') {
+        //     this.setState({image: 'mexican image'})
+        // }
+        // if(guyThatWins === 'Mexican') {
+        //     this.setState({image: 'mexican image'})
+        // }
+        // if(guyThatWins === 'Mexican') {
+        //     this.setState({image: 'mexican image'})
+        // }
+        // if(guyThatWins === 'Mexican') {
+        //     this.setState({image: 'mexican image'})
+        // }
+        // console.log(this.state.image, "this is this.state.image")
     }
     voteCountUpdateCollector(data) {
         console.log('votecountupdatecollectorhit', data.winner)

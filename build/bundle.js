@@ -44045,7 +44045,7 @@ var Platform = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Platform.__proto__ || Object.getPrototypeOf(Platform)).call(this));
 
         _this.state = {
-
+            image: '',
             status: 'disconnected',
             Option1: 'Chinese',
             Option2: 'Japanese',
@@ -44291,6 +44291,11 @@ var Platform = function (_React$Component) {
                             '!!'
                         )
                     )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'winnerImage' },
+                    this.state.image
                 )
             );
         }

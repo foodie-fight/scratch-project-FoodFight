@@ -11,7 +11,7 @@ class Platform extends React.Component {
     constructor() {
         super();
         this.state = {
-
+            image: '',
             status: 'disconnected',
             Option1: 'Chinese',
             Option2: 'Japanese',
@@ -185,6 +185,7 @@ class Platform extends React.Component {
                     <p className="won">{this.state.winner}!!</p>
                 </div>
             </div>
+            <div className="winnerImage">{this.state.image}</div>
         </div>
         );
     }

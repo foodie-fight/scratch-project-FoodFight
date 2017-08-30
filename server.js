@@ -123,7 +123,6 @@ io.sockets.on('connect', function (socket) {
         } else {
             console.log('error')
         }
-         //********
     });
     socket.on('yesJapanese', function (data) {
         // let socketId = data;

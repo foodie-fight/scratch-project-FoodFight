@@ -100,7 +100,7 @@ io.sockets.on('connect', function (socket) {
         count4Japanese: japaneseCounter,
         count4Mexican: mexicanCounter,
         count4Italian: italianCounter,
-    })
+    }) 
     socket.on('yesChinese', function (data) {
         console.log('yesChinese', data)
         // User.find({},(err,data) => {

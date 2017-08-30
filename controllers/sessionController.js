@@ -18,7 +18,6 @@ sessionController.isLoggedIn = function(req, res, next) {
 
 sessionController.startSession = function(req, res, next) {
   if(res.ssid) {
-    
     Session.find({cookieId: res.ssid}, (err,data) => {   
       if(err) throw err;
       console.log(res.ssid, ' startSession controller was hit')

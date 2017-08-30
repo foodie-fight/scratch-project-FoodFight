@@ -7,6 +7,13 @@ const mongoose = require('mongoose');
 const userController = require('./controllers/userController.js')
 const sessionController = require('./controllers/sessionController.js')
 const cookieController = require('./controllers/cookieController.js')
+const User = require('./models/userModel')
+let users = [];
+let chineseCounter = 0;
+let japaneseCounter = 0;
+let mexicanCounter = 0;
+let italianCounter = 0;
+let voters = [];
 
 mongoose.connect('mongodb://foods:123@ds163053.mlab.com:63053/foodtinder');
 mongoose.connection.once('open', () => {
@@ -22,6 +29,11 @@ app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, './build/index.html'))
 })
 app.get('/logged', (req,res) => {
+    (req,res,next) => {
+        console.log('logging in')
+        next()
+    }
+    sessionController.startSession,
     res.sendFile(path.join(__dirname, 'login.html'))
 })
 app.get('/signup', (req,res) => {
@@ -38,7 +50,11 @@ app.post('/logged',
     cookieController.setSSIDCookie,
     sessionController.startSession,
     (req,res, next) => {       
-        console.log('this line was hit  ')
+        console.log('this line was hit  ', req.body.username)
+        User.findOne({username: req.body.username}, (err, userd) => {
+            users.push(userd)
+            console.log(userd,'this is userd')
+        })
         res.redirect('/logged')
 })
 
@@ -53,12 +69,7 @@ app.post('/logged',
 
 const io = require('socket.io').listen(server);
 //users array stores our user socket connections
-let users = [];
-let chineseCounter = 0;
-let japaneseCounter = 0;
-let mexicanCounter = 0;
-let italianCounter = 0;
-let voters = [];
+
 app.set('view engine', 'ejs');
 app.use(cookieParser())
 
@@ -67,8 +78,10 @@ app.use(cookieParser())
 //listens for connect event when users join our poll
 io.sockets.on('connect', function (socket) {
     //pushes new users into our user collection (aka socket connections)
-    users.push(socket);
-    // console.log(users);
+    // users.push(socket);
+    let currUser = users[users.length-1]
+    console.log(currUser, 'this is currUser');
+    console.log(voters, 'this is voters')
     //console logs how many users (sockets) are connected to our server
     console.log('Connected: %s users', users.length);
     //listens for disconnect event (when user leaves); fires only once
@@ -90,12 +103,27 @@ io.sockets.on('connect', function (socket) {
         count4Italian: italianCounter,
     })
     socket.on('yesChinese', function (data) {
-        if (voters.indexOf(socket.id) === -1) {
+        console.log('yesChinese', data)
+        // User.find({},(err,data) => {
+        //     // console.log(' this is logged data' , data)
+        // })
+        // User.findOneAndUpdate({username:currUser.username},{socketId: socket.id},(err,data) => {
+        //     console.log(data, 'hopefully something returns')
+        // })
+        let socketId = data;
+        if (!currUser[socketId] && voters.indexOf(currUser.username) === -1) {
             chineseCounter += 1;
-            voters.push(socket.id)
+            socket.emit('onReturnYesChinese', { count4Chinese: chineseCounter })
+            socket.broadcast.emit('voteCountUpdateChinese', { count4Chinese: chineseCounter })
+            voters.push(currUser.username)
+            currUser[socketId] = data
+            console.log(voters, "this is voters")
+            console.log(voters.indexOf(currUser.username))
+            console.log(currUser[socketId])
+        } else {
+            console.log('error')
         }
-        socket.emit('onReturnYesChinese', { count4Chinese: chineseCounter })
-        socket.broadcast.emit('voteCountUpdateChinese', { count4Chinese: chineseCounter }) //********
+         //********
     });
     socket.on('yesJapanese', function (data) {
         if (voters.indexOf(socket.id) === -1) {

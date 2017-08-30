@@ -1,0 +1,25 @@
+body {
+  background-image: url("Food-clipart-free-clipart-images-3.jpg");
+}
+
+#header {
+  font-size: 50px;
+  border: 1px solid black;
+  background-color: #BEBEBE
+
+}
+
+#login {
+  border: 1px solid black;
+  width: 25%;
+  height: 25%;
+  margin-top: 15%;
+  margin-left: 37%;
+  padding: 2%;
+  background-color: #BEBEBE
+  
+}
+#un-pw {
+  margin-left: 20%;
+  margin-top: 2%;
+}

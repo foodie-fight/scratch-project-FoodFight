@@ -2,14 +2,30 @@
   <head>
     <meta charset="UTF-8">
     <title>Food Tinder!</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    Login
-    <form method="POST" action='/logged'>
-      <input name="username" type="text" placeholder="username"></input>
-      <input name="password" type="password" placeholder="password"></input>
-      <input type='submit' value="logged">
-    </form>
-    <a href='./../signup'>Sign up</a>
+    <center><header id="header">What-To-Eat</header></center>
+    <div id="cotainer">
+      <div id="login">
+        <form method="POST" action='/logged'>
+          <div id="un-pw"><h2>Login</h2></div>
+          <div id="un-pw">
+            <label>Username:</label>
+            <input name="username" type="text" placeholder="username"></input>
+          </div>
+          <div id="un-pw">
+            <label>Password:</label>
+            <input name="password" type="password" placeholder="password"></input>
+          </div>
+          <div id="un-pw">
+            <input type='submit' value="login">
+          </div>  
+        </form>
+        <div id="un-pw">
+        <span>Don't have an acount? <a href='./../signup'>Sign up</a></span>
+        </div>
+      </div>
+    <div>
   </body>
   </html>

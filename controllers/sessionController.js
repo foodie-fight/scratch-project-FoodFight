@@ -21,6 +21,7 @@ sessionController.startSession = function(req, res, next) {
     Session.find({cookieId: res.ssid}, (err,data) => {   
       if(err) throw err;
       console.log(res.ssid, ' startSession controller was hit')
+      console.log(data, 'this is the sessionController data')
       if(!data.length){
         Session.create({cookieId:res.ssid}, (err,date) => {
         console.log('old session was lost, new one created', date.cookieId)

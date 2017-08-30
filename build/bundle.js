@@ -44054,7 +44054,8 @@ var Platform = function (_React$Component) {
             count4Chinese: 0,
             count4Japanese: 0,
             count4Mexican: 0,
-            count4Italian: 0
+            count4Italian: 0,
+            winner: '... hmm what should we eat?'
         };
         _this.connected = _this.connected.bind(_this);
         _this.emit = _this.emit.bind(_this);
@@ -44071,6 +44072,9 @@ var Platform = function (_React$Component) {
         _this.onItalian = _this.onItalian.bind(_this);
         _this.onReturnYesItalian = _this.onReturnYesItalian.bind(_this);
         _this.voteCountUpdateItalian = _this.voteCountUpdateItalian.bind(_this);
+        _this.collector = _this.collector.bind(_this);
+        _this.onReturnCollector = _this.onReturnCollector.bind(_this);
+        _this.voteCountUpdateCollector = _this.voteCountUpdateCollector.bind(_this);
         return _this;
     }
 
@@ -44092,6 +44096,9 @@ var Platform = function (_React$Component) {
             this.socket.on('onItalian', this.onItalian);
             this.socket.on('onReturnYesItalian', this.onReturnYesItalian);
             this.socket.on('voteCountUpdateItalian', this.voteCountUpdateItalian);
+            this.socket.on('collector', this.collector);
+            this.socket.on('onReturnCollector', this.onReturnCollector);
+            this.socket.on('voteCountUpdateCollector', this.voteCountUpdateCollector);
         }
     }, {
         key: 'emit',
@@ -44111,7 +44118,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onChinese',
         value: function onChinese() {
-            this.emit('yesChinese', socket.id);
+            this.emit('yesChinese');
         }
     }, {
         key: 'onReturnYesChinese',
@@ -44126,7 +44133,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onJapanese',
         value: function onJapanese() {
-            this.emit('yesJapanese', socket.id);
+            this.emit('yesJapanese');
         }
     }, {
         key: 'onReturnYesJapanese',
@@ -44141,7 +44148,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onMexican',
         value: function onMexican() {
-            this.emit('yesMexican', socket.id);
+            this.emit('yesMexican');
         }
     }, {
         key: 'onReturnYesMexican',
@@ -44156,7 +44163,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onItalian',
         value: function onItalian() {
-            this.emit('yesItalian', socket.id);
+            this.emit('yesItalian');
         }
     }, {
         key: 'onReturnYesItalian',
@@ -44169,10 +44176,26 @@ var Platform = function (_React$Component) {
             this.setState({ count4Italian: data.count4Italian });
         }
     }, {
+        key: 'collector',
+        value: function collector() {
+            this.emit('yesCollection');
+        }
+    }, {
+        key: 'onReturnCollector',
+        value: function onReturnCollector(data) {
+            console.log(data.winner, ' this is that data on ONRETURNCOLLECTOR');
+            this.setState({ winner: data.winner });
+        }
+    }, {
+        key: 'voteCountUpdateCollector',
+        value: function voteCountUpdateCollector(data) {
+            console.log('votecountupdatecollectorhit', data.winner);
+            this.setState({ winner: data.winner });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            console.log(socket.id, " this is socket.id");
-
+            console.log(this.state.winner, ' this is this state.winner');
             return _react2.default.createElement(
                 'div',
                 null,
@@ -44221,6 +44244,11 @@ var Platform = function (_React$Component) {
                                 uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
                                 style: styles.radioButton,
                                 onClick: this.onChinese
+                            }),
+                            _react2.default.createElement(_RadioButton.RadioButton, {
+                                value: 'collection',
+                                label: 'Choose Meal',
+                                onClick: this.collector
                             })
                         )
                     ),
@@ -44255,6 +44283,12 @@ var Platform = function (_React$Component) {
                             { className: 'lead' },
                             this.state.count4Italian,
                             ' Votes for Italian Cuisine'
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'won' },
+                            this.state.winner,
+                            '!!'
                         )
                     )
                 )
@@ -44274,8 +44308,7 @@ var styles = {
     },
     contain: {
         wrapMargin: '30',
-        padding: '50',
-        backgroundImage: "url('http://www.nmgncp.com/data/out/124/4634171-food-wallpaper-background.jpg')"
+        padding: '50'
     }
 };
 

@@ -185,7 +185,7 @@ class Platform extends React.Component {
                     <p className="won">{this.state.winner}!!</p>
                 </div>
             </div>
-            <div className="winnerImage">{this.state.image}</div>
+            {/* <div className="winnerImage">{this.state.image}</div> */}
         </div>
         );
     }

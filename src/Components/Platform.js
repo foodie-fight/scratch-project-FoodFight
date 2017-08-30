@@ -65,16 +65,16 @@ class Platform extends React.Component {
         this.setState({ name: data.name });
     }
     onChinese() {
-        this.emit('yesChinese');
+        this.emit('yesChinese', socket.id);
     }
     onReturnYesChinese(data) {
-        this.setState({ count4Chinese: data.count4Chinese })
+        this.setState({ count4Chinese: data.count4Chinese }) 
     }
     voteCountUpdateChinese(data) {
         this.setState({ count4Chinese: data.count4Chinese })
     }
     onJapanese() {
-        this.emit('yesJapanese');
+        this.emit('yesJapanese', socket.id);
     }
     onReturnYesJapanese(data) {
         this.setState({ count4Japanese: data.count4Japanese })
@@ -83,7 +83,7 @@ class Platform extends React.Component {
         this.setState({ count4Japanese: data.count4Japanese })
     }
     onMexican() {
-        this.emit('yesMexican');
+        this.emit('yesMexican', socket.id);
     }
     onReturnYesMexican(data) {
         this.setState({ count4Mexican: data.count4Mexican })
@@ -92,7 +92,7 @@ class Platform extends React.Component {
         this.setState({ count4Mexican: data.count4Mexican })
     }
     onItalian() {
-        this.emit('yesItalian');
+        this.emit('yesItalian', socket.id);
     }
     onReturnYesItalian(data) {
         this.setState({ count4Italian: data.count4Italian })
@@ -104,20 +104,22 @@ class Platform extends React.Component {
 
 
     render() {
+        console.log(socket.id, " this is socket.id")
+        
 
         return (
         <div>
                 <div className="cover-container" style={styles.contain}>
 
                     <div className="col-lg-6">
-                        <h1 className="cover-heading">Here’s three choices.</h1>
+                        <h1 className="cover-heading">Here’s four choices.</h1>
 
 
                                 <RadioButtonGroup name="foodTypes" defaultSelected="not_light">
 
                                     <RadioButton
                                         value="Mexican"
-                                        label="Mexican"
+                                        label="Mexican Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
@@ -126,7 +128,7 @@ class Platform extends React.Component {
 
                                     <RadioButton
                                         value="Japanese"
-                                        label="Japanese"
+                                        label="Japanese Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
@@ -135,7 +137,7 @@ class Platform extends React.Component {
 
                                     <RadioButton
                                         value="Italian"
-                                        label="Italian"
+                                        label="Italian Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
@@ -144,7 +146,7 @@ class Platform extends React.Component {
 
                                     <RadioButton
                                         value="Chinese"
-                                        label="Chinese"
+                                        label="Chinese Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
@@ -155,10 +157,10 @@ class Platform extends React.Component {
 
                 <div className="col-lg-6">
                     <h1 className="cover-heading">Results</h1>
-                    <p className="lead">{this.state.count4Mexican} Votes for Mexican Food </p>
-                    <p className="lead">{this.state.count4Japanese} Votes for Japanese Food </p>
-                    <p className="lead">{this.state.count4Chinese} Votes for Chinese Food </p>
-                    <p className="lead">{this.state.count4Italian} Votes for Italian Food</p>
+                    <p className="lead">{this.state.count4Mexican} Votes for Mexican Cuisine </p>
+                    <p className="lead">{this.state.count4Japanese} Votes for Japanese Cuisine </p>
+                    <p className="lead">{this.state.count4Chinese} Votes for Chinese Cuisine </p>
+                    <p className="lead">{this.state.count4Italian} Votes for Italian Cuisine</p>
                 </div>
             </div>
         </div>

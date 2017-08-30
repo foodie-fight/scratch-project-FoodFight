@@ -44111,7 +44111,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onChinese',
         value: function onChinese() {
-            this.emit('yesChinese');
+            this.emit('yesChinese', socket.id);
         }
     }, {
         key: 'onReturnYesChinese',
@@ -44126,7 +44126,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onJapanese',
         value: function onJapanese() {
-            this.emit('yesJapanese');
+            this.emit('yesJapanese', socket.id);
         }
     }, {
         key: 'onReturnYesJapanese',
@@ -44141,7 +44141,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onMexican',
         value: function onMexican() {
-            this.emit('yesMexican');
+            this.emit('yesMexican', socket.id);
         }
     }, {
         key: 'onReturnYesMexican',
@@ -44156,7 +44156,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onItalian',
         value: function onItalian() {
-            this.emit('yesItalian');
+            this.emit('yesItalian', socket.id);
         }
     }, {
         key: 'onReturnYesItalian',
@@ -44171,6 +44171,7 @@ var Platform = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            console.log(socket.id, " this is socket.id");
 
             return _react2.default.createElement(
                 'div',
@@ -44184,14 +44185,14 @@ var Platform = function (_React$Component) {
                         _react2.default.createElement(
                             'h1',
                             { className: 'cover-heading' },
-                            'Here\u2019s three choices.'
+                            'Here\u2019s four choices.'
                         ),
                         _react2.default.createElement(
                             _RadioButton.RadioButtonGroup,
                             { name: 'foodTypes', defaultSelected: 'not_light' },
                             _react2.default.createElement(_RadioButton.RadioButton, {
                                 value: 'Mexican',
-                                label: 'Mexican',
+                                label: 'Mexican Cuisine',
                                 checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
                                 uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
                                 style: styles.radioButton,
@@ -44199,7 +44200,7 @@ var Platform = function (_React$Component) {
                             }),
                             _react2.default.createElement(_RadioButton.RadioButton, {
                                 value: 'Japanese',
-                                label: 'Japanese',
+                                label: 'Japanese Cuisine',
                                 checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
                                 uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
                                 style: styles.radioButton,
@@ -44207,7 +44208,7 @@ var Platform = function (_React$Component) {
                             }),
                             _react2.default.createElement(_RadioButton.RadioButton, {
                                 value: 'Italian',
-                                label: 'Italian',
+                                label: 'Italian Cuisine',
                                 checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
                                 uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
                                 style: styles.radioButton,
@@ -44215,7 +44216,7 @@ var Platform = function (_React$Component) {
                             }),
                             _react2.default.createElement(_RadioButton.RadioButton, {
                                 value: 'Chinese',
-                                label: 'Chinese',
+                                label: 'Chinese Cuisine',
                                 checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
                                 uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
                                 style: styles.radioButton,
@@ -44235,25 +44236,25 @@ var Platform = function (_React$Component) {
                             'p',
                             { className: 'lead' },
                             this.state.count4Mexican,
-                            ' Votes for Mexican Food '
+                            ' Votes for Mexican Cuisine '
                         ),
                         _react2.default.createElement(
                             'p',
                             { className: 'lead' },
                             this.state.count4Japanese,
-                            ' Votes for Japanese Food '
+                            ' Votes for Japanese Cuisine '
                         ),
                         _react2.default.createElement(
                             'p',
                             { className: 'lead' },
                             this.state.count4Chinese,
-                            ' Votes for Chinese Food '
+                            ' Votes for Chinese Cuisine '
                         ),
                         _react2.default.createElement(
                             'p',
                             { className: 'lead' },
                             this.state.count4Italian,
-                            ' Votes for Italian Food'
+                            ' Votes for Italian Cuisine'
                         )
                     )
                 )

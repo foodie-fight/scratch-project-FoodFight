@@ -4,8 +4,13 @@ const path = require('path')
 
 const userController = {};
 
-userController.getAllUsers = (next) => {
-  User.find({}, next);
+userController.getAllUsers = () => {
+  let answer;
+  User.find({}, (err,data) => {
+    answer = data
+  });
+  console.log(answer, "answer")
+  return answer
 };
 
 userController.createUser = (req, res, next) => {

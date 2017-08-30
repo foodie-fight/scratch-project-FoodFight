@@ -8,6 +8,11 @@ const userController = require('./controllers/userController.js')
 const sessionController = require('./controllers/sessionController.js')
 const cookieController = require('./controllers/cookieController.js')
 const User = require('./models/userModel')
+// const mexImage = require('./build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg')
+const mexican = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/001_Tacos_de_carnitas%2C_carne_asada_y_al_pastor.jpg/1200px-001_Tacos_de_carnitas%2C_carne_asada_y_al_pastor.jpg'
+const japanese = 'https://www.litchfieldbeach.com/images/sushi-myrtle-beach.jpg'
+const chinese = 'https://images.chinahighlights.com/allpicture/2014/08/703569837fea4a92834556bf_300x200.jpg'
+const italian = 'http://food.sndimg.com/img/upload/400x300/International-Italian_gailanng_9528.jpg'
 let users = [];
 let chineseCounter = 0;
 let japaneseCounter = 0;
@@ -178,29 +183,41 @@ io.sockets.on('connect', function (socket) {
         let maxCount = Math.max.apply(null, cuisineList)
         let winners = []
         let answer;
+        let winningPicture;
         if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(italianCounter)){
             if(winners.indexOf('Italian') === -1){
                 winners.push('Italian')
+                winningPicture = italian
             }
         }
         if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(chineseCounter)){
             if(winners.indexOf('Chinese') === -1){
                 winners.push('Chinese')
+                winningPicture = chinese
             }        }
         if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(japaneseCounter)){
             if(winners.indexOf('Japanese') === -1){
                 winners.push('Japanese')
+                winningPicture = japanese
             }        }
         if(cuisineList.indexOf(maxCount) === cuisineList.indexOf(mexicanCounter)){
             if(winners.indexOf('Mexican') === -1){
                 winners.push('Mexican')
+                winningPicture = mexican
             }        }
         if(!winners.length){answer = ''}
-        if(winners.length === 1){answer = `the winner is ${winners[0]}`}
-        if(winners.length > 1){answer = `the winners are ${winners}`}
-        console.log(answer, 'this is the answer')
-        socket.emit('onReturnCollector', { winner: answer })
-        socket.broadcast.emit('voteCountUpdateCollector', { winner: answer })
+        console.log(winningPicture, "this is the winning picture")
+        if(winners.length === 1){
+            answer = `the winner is ${winners[0]}`
+            socket.emit('onReturnCollector', { winner: answer, image: winningPicture })
+            socket.broadcast.emit('voteCountUpdateCollector', { winner: answer, image: winningPicture })
+        }
+        if(winners.length > 1){
+            answer = `the winners are ${winners}`
+            socket.emit('onReturnCollector', { winner: answer, image: winningPicture })
+            socket.broadcast.emit('voteCountUpdateCollector', { winner: answer, image: winningPicture })
+        }
+        
     });
 });//ends io.socket.on.connect
 //logs when connected to server

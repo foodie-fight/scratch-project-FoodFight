@@ -44046,11 +44046,9 @@ var Platform = function (_React$Component) {
 
         _this.state = {
             image: '',
+            // mexicanImage: <Image source={require('./../../build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg')}/>,
+            // mexicanImage: <Image source={{uri:  './../../build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg'}}/>,
             status: 'disconnected',
-            Option1: 'Chinese',
-            Option2: 'Japanese',
-            Option3: 'Mexican',
-            Option4: 'Italian',
             count4Chinese: 0,
             count4Japanese: 0,
             count4Mexican: 0,
@@ -44183,23 +44181,23 @@ var Platform = function (_React$Component) {
     }, {
         key: 'onReturnCollector',
         value: function onReturnCollector(data) {
-            console.log(data.winner, ' this is that data on ONRETURNCOLLECTOR');
+            console.log(data, ' this is that data on ONRETURNCOLLECTOR');
             this.setState({ winner: data.winner });
             console.log(this.state.winner, 'this is this.state.winner');
             var guyThatWins = this.state.winner.split(" ").reverse()[0];
-            // if(guyThatWins === 'Mexican') {
-            //     this.setState({image: 'mexican image'})
-            // }
-            // if(guyThatWins === 'Mexican') {
-            //     this.setState({image: 'mexican image'})
-            // }
-            // if(guyThatWins === 'Mexican') {
-            //     this.setState({image: 'mexican image'})
-            // }
-            // if(guyThatWins === 'Mexican') {
-            //     this.setState({image: 'mexican image'})
-            // }
-            // console.log(this.state.image, "this is this.state.image")
+            if (guyThatWins === 'Mexican') {
+                this.setState({ image: data.image });
+            }
+            if (guyThatWins === 'Japanese') {
+                this.setState({ image: data.image });
+            }
+            if (guyThatWins === 'Chinese') {
+                this.setState({ image: data.image });
+            }
+            if (guyThatWins === 'Italian') {
+                this.setState({ image: data.image });
+            }
+            console.log(this.state.image, "this is this.state.image");
         }
     }, {
         key: 'voteCountUpdateCollector',
@@ -44310,7 +44308,7 @@ var Platform = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'winnerImage' },
-                    this.state.image
+                    _react2.default.createElement('img', { src: this.state.image })
                 )
             );
         }

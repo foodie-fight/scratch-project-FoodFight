@@ -12,11 +12,9 @@ class Platform extends React.Component {
         super();
         this.state = {
             image: '',
+            // mexicanImage: <Image source={require('./../../build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg')}/>,
+            // mexicanImage: <Image source={{uri:  './../../build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg'}}/>,
             status: 'disconnected',
-            Option1: 'Chinese',
-            Option2: 'Japanese',
-            Option3: 'Mexican',
-            Option4: 'Italian',
             count4Chinese: 0,
             count4Japanese: 0,
             count4Mexican: 0,
@@ -111,23 +109,23 @@ class Platform extends React.Component {
         this.emit('yesCollection');
     }
     onReturnCollector(data) {
-        console.log(data.winner, ' this is that data on ONRETURNCOLLECTOR')
+        console.log(data, ' this is that data on ONRETURNCOLLECTOR')
         this.setState({ winner: data.winner })
         console.log(this.state.winner, 'this is this.state.winner')
         let guyThatWins = this.state.winner.split(" ").reverse()[0]
-        // if(guyThatWins === 'Mexican') {
-        //     this.setState({image: 'mexican image'})
-        // }
-        // if(guyThatWins === 'Mexican') {
-        //     this.setState({image: 'mexican image'})
-        // }
-        // if(guyThatWins === 'Mexican') {
-        //     this.setState({image: 'mexican image'})
-        // }
-        // if(guyThatWins === 'Mexican') {
-        //     this.setState({image: 'mexican image'})
-        // }
-        // console.log(this.state.image, "this is this.state.image")
+        if(guyThatWins === 'Mexican') {
+            this.setState({image: data.image})
+        }
+        if(guyThatWins === 'Japanese') {
+            this.setState({image: data.image})
+        }
+        if(guyThatWins === 'Chinese') {
+            this.setState({image: data.image})
+        }
+        if(guyThatWins === 'Italian') {
+            this.setState({image: data.image})
+        }
+        console.log(this.state.image, "this is this.state.image")
     }
     voteCountUpdateCollector(data) {
         console.log('votecountupdatecollectorhit', data.winner)
@@ -200,7 +198,7 @@ class Platform extends React.Component {
                     <p className="won">{this.state.winner}!!</p>
                 </div>
             </div>
-            {/* <div className="winnerImage">{this.state.image}</div> */}
+            <div className="winnerImage"><img src={this.state.image}/></div>
         </div>
         );
     }

@@ -11,16 +11,15 @@ class Platform extends React.Component {
     constructor() {
         super();
         this.state = {
-
+            image: '',
+            // mexicanImage: <Image source={require('./../../build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg')}/>,
+            // mexicanImage: <Image source={{uri:  './../../build/001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg'}}/>,
             status: 'disconnected',
-            Option1: 'Chinese',
-            Option2: 'Japanese',
-            Option3: 'Mexican',
-            Option4: 'Italian',
             count4Chinese: 0,
             count4Japanese: 0,
             count4Mexican: 0,
             count4Italian: 0,
+            winner: '... hmm what should we eat?',
         }
         this.connected = this.connected.bind(this);
         this.emit = this.emit.bind(this);
@@ -37,6 +36,9 @@ class Platform extends React.Component {
         this.onItalian = this.onItalian.bind(this);
         this.onReturnYesItalian = this.onReturnYesItalian.bind(this);
         this.voteCountUpdateItalian = this.voteCountUpdateItalian.bind(this);
+        this.collector = this.collector.bind(this)
+        this.onReturnCollector = this.onReturnCollector.bind(this)
+        this.voteCountUpdateCollector = this.voteCountUpdateCollector.bind(this)
     }
     componentWillMount() {
         this.socket = io('http://localhost:3000');
@@ -54,6 +56,9 @@ class Platform extends React.Component {
         this.socket.on('onItalian', this.onItalian);
         this.socket.on('onReturnYesItalian', this.onReturnYesItalian);
         this.socket.on('voteCountUpdateItalian', this.voteCountUpdateItalian);
+        this.socket.on('collector', this.collector);
+        this.socket.on('onReturnCollector', this.onReturnCollector);
+        this.socket.on('voteCountUpdateCollector', this.voteCountUpdateCollector);
     }
     emit(event, data) {
         this.socket.emit(event, data);
@@ -68,7 +73,7 @@ class Platform extends React.Component {
         this.emit('yesChinese');
     }
     onReturnYesChinese(data) {
-        this.setState({ count4Chinese: data.count4Chinese })
+        this.setState({ count4Chinese: data.count4Chinese }) 
     }
     voteCountUpdateChinese(data) {
         this.setState({ count4Chinese: data.count4Chinese })
@@ -100,33 +105,123 @@ class Platform extends React.Component {
     voteCountUpdateItalian(data) {
         this.setState({ count4Italian: data.count4Italian })
     }
-
-
+    collector() {
+        this.emit('yesCollection');
+    }
+    onReturnCollector(data) {
+        console.log(data, ' this is that data on ONRETURNCOLLECTOR')
+        this.setState({ winner: data.winner })
+        console.log(this.state.winner, 'this is this.state.winner')
+        let guyThatWins = this.state.winner.split(" ").reverse()[0]
+        if(guyThatWins === 'Mexican') {
+            this.setState({image: data.image})
+        }
+        if(guyThatWins === 'Japanese') {
+            this.setState({image: data.image})
+        }
+        if(guyThatWins === 'Chinese') {
+            this.setState({image: data.image})
+        }
+        if(guyThatWins === 'Italian') {
+            this.setState({image: data.image})
+        }
+        console.log(this.state.image, "this is this.state.image")
+    }
+    voteCountUpdateCollector(data) {
+        console.log('votecountupdatecollectorhit', data.winner)
+        this.setState({ winner: data.winner })
+    }
 
     render() {
-      
+        console.log(this.state.winner, ' this is this state.winner')
+        if(this.state.image === ""){
+            return (
+                <div>
+                        <div className="cover-container" style={styles.contain}>
+        
+                            <div className="col-lg-6">
+                                <h1 className="cover-heading">Here’s four choices.</h1>
+        
+        
+                                        <RadioButtonGroup name="foodTypes" defaultSelected="not_light">
+        
+                                            <RadioButton
+                                                value="Mexican"
+                                                label="Mexican Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onMexican}
+                                            />
+        
+                                            <RadioButton
+                                                value="Japanese"
+                                                label="Japanese Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onJapanese}
+                                            />
+        
+                                            <RadioButton
+                                                value="Italian"
+                                                label="Italian Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onItalian}
+                                            />
+        
+                                            <RadioButton
+                                                value="Chinese"
+                                                label="Chinese Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onChinese}
+                                            />
+                                            <RadioButton
+                                                value="collection"
+                                                label="Choose Meal"
+                                                onClick={this.collector}
+                                            />
+                                        </RadioButtonGroup>
+                                </div>
+        
+                        <div className="col-lg-6">
+                            <h1 className="cover-heading">Results</h1>
+                            <p className="lead">{this.state.count4Mexican} Votes for Mexican Cuisine </p>
+                            <p className="lead">{this.state.count4Japanese} Votes for Japanese Cuisine </p>
+                            <p className="lead">{this.state.count4Chinese} Votes for Chinese Cuisine </p>
+                            <p className="lead">{this.state.count4Italian} Votes for Italian Cuisine</p>
+                            <p className="won">{this.state.winner}!!</p>
+                        </div>
+                    </div>
+                </div>
+                );
+        } else {
         return (
         <div>
                 <div className="cover-container" style={styles.contain}>
 
                     <div className="col-lg-6">
-                        <h1 className="cover-heading">Here’s three choices.</h1>
-                            
+                        <h1 className="cover-heading">Here’s four choices.</h1>
+
 
                                 <RadioButtonGroup name="foodTypes" defaultSelected="not_light">
 
                                     <RadioButton
                                         value="Mexican"
-                                        label="Mexican"
+                                        label="Mexican Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
                                         onClick={this.onMexican}
-                                    /> 
+                                    />
 
                                     <RadioButton
                                         value="Japanese"
-                                        label="Japanese"
+                                        label="Japanese Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
@@ -135,7 +230,7 @@ class Platform extends React.Component {
 
                                     <RadioButton
                                         value="Italian"
-                                        label="Italian"
+                                        label="Italian Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
@@ -144,25 +239,33 @@ class Platform extends React.Component {
 
                                     <RadioButton
                                         value="Chinese"
-                                        label="Chinese"
+                                        label="Chinese Cuisine"
                                         checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
                                         uncheckedIcon={<ActionFavoriteBorder />}
                                         style={styles.radioButton}
                                         onClick={this.onChinese}
+                                    />
+                                    <RadioButton
+                                        value="collection"
+                                        label="Choose Meal"
+                                        onClick={this.collector}
                                     />
                                 </RadioButtonGroup>
                         </div>
 
                 <div className="col-lg-6">
                     <h1 className="cover-heading">Results</h1>
-                    <p className="lead">{this.state.count4Mexican} Votes for Mexican Food </p>
-                    <p className="lead">{this.state.count4Japanese} Votes for Japanese Food </p>
-                    <p className="lead">{this.state.count4Chinese} Votes for Chinese Food </p>
-                    <p className="lead">{this.state.count4Italian} Votes for Italian Food</p>
+                    <p className="lead">{this.state.count4Mexican} Votes for Mexican Cuisine </p>
+                    <p className="lead">{this.state.count4Japanese} Votes for Japanese Cuisine </p>
+                    <p className="lead">{this.state.count4Chinese} Votes for Chinese Cuisine </p>
+                    <p className="lead">{this.state.count4Italian} Votes for Italian Cuisine</p>
+                    <p className="won">{this.state.winner}!!</p>
                 </div>
             </div>
+            <div className="winnerImage" style={styles.winner}><img src={this.state.image} style={{height:400, width:600}}/></div>
         </div>
         );
+    }
     }
 }
 
@@ -176,8 +279,17 @@ const styles = {
     contain: {
         wrapMargin: '30',
         padding: '50',
-        backgroundImage: "url('http://www.nmgncp.com/data/out/124/4634171-food-wallpaper-background.jpg')"
+    },
+    winner: {
+        backgroundColor:'transparent',
+        width: 600,
+        height: 400,
+        position:"absolute",
+        left: 700,
+        top: 200
     }
 };
 
 export default Platform;
+
+

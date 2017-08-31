@@ -44209,108 +44209,208 @@ var Platform = function (_React$Component) {
         key: 'render',
         value: function render() {
             console.log(this.state.winner, ' this is this state.winner');
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
+            if (this.state.image === "") {
+                return _react2.default.createElement(
                     'div',
-                    { className: 'cover-container', style: styles.contain },
+                    null,
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-lg-6' },
+                        { className: 'cover-container', style: styles.contain },
                         _react2.default.createElement(
-                            'h1',
-                            { className: 'cover-heading' },
-                            'Here\u2019s four choices.'
+                            'div',
+                            { className: 'col-lg-6' },
+                            _react2.default.createElement(
+                                'h1',
+                                { className: 'cover-heading' },
+                                'Here\u2019s four choices.'
+                            ),
+                            _react2.default.createElement(
+                                _RadioButton.RadioButtonGroup,
+                                { name: 'foodTypes', defaultSelected: 'not_light' },
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Mexican',
+                                    label: 'Mexican Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onMexican
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Japanese',
+                                    label: 'Japanese Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onJapanese
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Italian',
+                                    label: 'Italian Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onItalian
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Chinese',
+                                    label: 'Chinese Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onChinese
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'collection',
+                                    label: 'Choose Meal',
+                                    onClick: this.collector
+                                })
+                            )
                         ),
                         _react2.default.createElement(
-                            _RadioButton.RadioButtonGroup,
-                            { name: 'foodTypes', defaultSelected: 'not_light' },
-                            _react2.default.createElement(_RadioButton.RadioButton, {
-                                value: 'Mexican',
-                                label: 'Mexican Cuisine',
-                                checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
-                                uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
-                                style: styles.radioButton,
-                                onClick: this.onMexican
-                            }),
-                            _react2.default.createElement(_RadioButton.RadioButton, {
-                                value: 'Japanese',
-                                label: 'Japanese Cuisine',
-                                checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
-                                uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
-                                style: styles.radioButton,
-                                onClick: this.onJapanese
-                            }),
-                            _react2.default.createElement(_RadioButton.RadioButton, {
-                                value: 'Italian',
-                                label: 'Italian Cuisine',
-                                checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
-                                uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
-                                style: styles.radioButton,
-                                onClick: this.onItalian
-                            }),
-                            _react2.default.createElement(_RadioButton.RadioButton, {
-                                value: 'Chinese',
-                                label: 'Chinese Cuisine',
-                                checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
-                                uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
-                                style: styles.radioButton,
-                                onClick: this.onChinese
-                            }),
-                            _react2.default.createElement(_RadioButton.RadioButton, {
-                                value: 'collection',
-                                label: 'Choose Meal',
-                                onClick: this.collector
-                            })
+                            'div',
+                            { className: 'col-lg-6' },
+                            _react2.default.createElement(
+                                'h1',
+                                { className: 'cover-heading' },
+                                'Results'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Mexican,
+                                ' Votes for Mexican Cuisine '
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Japanese,
+                                ' Votes for Japanese Cuisine '
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Chinese,
+                                ' Votes for Chinese Cuisine '
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Italian,
+                                ' Votes for Italian Cuisine'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'won' },
+                                this.state.winner,
+                                '!!'
+                            )
+                        )
+                    )
+                );
+            } else {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'cover-container', style: styles.contain },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-lg-6' },
+                            _react2.default.createElement(
+                                'h1',
+                                { className: 'cover-heading' },
+                                'Here\u2019s four choices.'
+                            ),
+                            _react2.default.createElement(
+                                _RadioButton.RadioButtonGroup,
+                                { name: 'foodTypes', defaultSelected: 'not_light' },
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Mexican',
+                                    label: 'Mexican Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onMexican
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Japanese',
+                                    label: 'Japanese Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onJapanese
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Italian',
+                                    label: 'Italian Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onItalian
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'Chinese',
+                                    label: 'Chinese Cuisine',
+                                    checkedIcon: _react2.default.createElement(_favorite2.default, { style: { color: '#F44336' } }),
+                                    uncheckedIcon: _react2.default.createElement(_favoriteBorder2.default, null),
+                                    style: styles.radioButton,
+                                    onClick: this.onChinese
+                                }),
+                                _react2.default.createElement(_RadioButton.RadioButton, {
+                                    value: 'collection',
+                                    label: 'Choose Meal',
+                                    onClick: this.collector
+                                })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-lg-6' },
+                            _react2.default.createElement(
+                                'h1',
+                                { className: 'cover-heading' },
+                                'Results'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Mexican,
+                                ' Votes for Mexican Cuisine '
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Japanese,
+                                ' Votes for Japanese Cuisine '
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Chinese,
+                                ' Votes for Chinese Cuisine '
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'lead' },
+                                this.state.count4Italian,
+                                ' Votes for Italian Cuisine'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'won' },
+                                this.state.winner,
+                                '!!'
+                            )
                         )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-lg-6' },
-                        _react2.default.createElement(
-                            'h1',
-                            { className: 'cover-heading' },
-                            'Results'
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'lead' },
-                            this.state.count4Mexican,
-                            ' Votes for Mexican Cuisine '
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'lead' },
-                            this.state.count4Japanese,
-                            ' Votes for Japanese Cuisine '
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'lead' },
-                            this.state.count4Chinese,
-                            ' Votes for Chinese Cuisine '
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'lead' },
-                            this.state.count4Italian,
-                            ' Votes for Italian Cuisine'
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            { className: 'won' },
-                            this.state.winner,
-                            '!!'
-                        )
+                        { className: 'winnerImage', style: styles.winner },
+                        _react2.default.createElement('img', { src: this.state.image, style: { height: 400, width: 600 } })
                     )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'winnerImage' },
-                    _react2.default.createElement('img', { src: this.state.image })
-                )
-            );
+                );
+            }
         }
     }]);
 
@@ -44327,6 +44427,14 @@ var styles = {
     contain: {
         wrapMargin: '30',
         padding: '50'
+    },
+    winner: {
+        backgroundColor: 'transparent',
+        width: 600,
+        height: 400,
+        position: "absolute",
+        left: 700,
+        top: 200
     }
 };
 

@@ -132,10 +132,74 @@ class Platform extends React.Component {
         this.setState({ winner: data.winner })
     }
 
-
-
     render() {
         console.log(this.state.winner, ' this is this state.winner')
+        if(this.state.image === ""){
+            return (
+                <div>
+                        <div className="cover-container" style={styles.contain}>
+        
+                            <div className="col-lg-6">
+                                <h1 className="cover-heading">Here’s four choices.</h1>
+        
+        
+                                        <RadioButtonGroup name="foodTypes" defaultSelected="not_light">
+        
+                                            <RadioButton
+                                                value="Mexican"
+                                                label="Mexican Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onMexican}
+                                            />
+        
+                                            <RadioButton
+                                                value="Japanese"
+                                                label="Japanese Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onJapanese}
+                                            />
+        
+                                            <RadioButton
+                                                value="Italian"
+                                                label="Italian Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onItalian}
+                                            />
+        
+                                            <RadioButton
+                                                value="Chinese"
+                                                label="Chinese Cuisine"
+                                                checkedIcon={<ActionFavorite style={{ color: '#F44336' }} />}
+                                                uncheckedIcon={<ActionFavoriteBorder />}
+                                                style={styles.radioButton}
+                                                onClick={this.onChinese}
+                                            />
+                                            <RadioButton
+                                                value="collection"
+                                                label="Choose Meal"
+                                                onClick={this.collector}
+                                            />
+                                        </RadioButtonGroup>
+                                </div>
+        
+                        <div className="col-lg-6">
+                            <h1 className="cover-heading">Results</h1>
+                            <p className="lead">{this.state.count4Mexican} Votes for Mexican Cuisine </p>
+                            <p className="lead">{this.state.count4Japanese} Votes for Japanese Cuisine </p>
+                            <p className="lead">{this.state.count4Chinese} Votes for Chinese Cuisine </p>
+                            <p className="lead">{this.state.count4Italian} Votes for Italian Cuisine</p>
+                            <p className="won">{this.state.winner}!!</p>
+                        </div>
+                    </div>
+                </div>
+                );
+        } else {
         return (
         <div>
                 <div className="cover-container" style={styles.contain}>
@@ -198,9 +262,10 @@ class Platform extends React.Component {
                     <p className="won">{this.state.winner}!!</p>
                 </div>
             </div>
-            <div className="winnerImage"><img src={this.state.image}/></div>
+            <div className="winnerImage" style={styles.winner}><img src={this.state.image} style={{height:400, width:600}}/></div>
         </div>
         );
+    }
     }
 }
 
@@ -214,7 +279,17 @@ const styles = {
     contain: {
         wrapMargin: '30',
         padding: '50',
+    },
+    winner: {
+        backgroundColor:'transparent',
+        width: 600,
+        height: 400,
+        position:"absolute",
+        left: 700,
+        top: 200
     }
 };
 
 export default Platform;
+
+
